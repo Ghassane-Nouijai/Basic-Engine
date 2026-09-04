@@ -76,13 +76,13 @@ int main()
 		// Two balls falling and colliding
 		auto obj1 = std::make_shared<SimObject>(
 			std::make_unique<Sphere>(0.2f, 50),
-			PhysicsObject(glm::vec3(0.0f, 5.0f, 0.0f), 1.0f, 0.2f, 1.0f, false, glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
+			PhysicsObject(glm::vec3(0.0f, 5.0f, 0.0f), 1.0f, 0.2f, 0.8f, false, glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
 			Material::Rubber()
 		);
 
 		auto obj2 = std::make_shared<SimObject>(
 			std::make_unique<Sphere>(0.5f, 50),
-			PhysicsObject(glm::vec3(0.0f, 3.0f, 0.0f), 10.0f, 0.5f, 1.0f, false, glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
+			PhysicsObject(glm::vec3(0.0f, 3.0f, 0.0f), 10.0f, 0.5f, 0.8f, false, glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
 			Material::Rubber()
 		);
 
@@ -108,7 +108,7 @@ int main()
 			renderer.Clear();
 			shader.Bind();
 
-			shader.SetUniform3fv("u_Light.position", glm::vec3(sin(deltaTime), 5.0f, cos(deltaTime)));
+			shader.SetUniform3fv("u_Light.position", glm::vec3(8 * sin(glfwGetTime()), 5.0f, 8 * cos(glfwGetTime())));
 			shader.SetUniform3fv("u_Light.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
 			shader.SetUniform3fv("u_Light.diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
 			shader.SetUniform3fv("u_Light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
