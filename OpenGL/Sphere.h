@@ -23,5 +23,5 @@ public:
 	std::vector<float> CreateVertices(float radius, unsigned int precision);
 	std::vector<unsigned int> CreateIndices(unsigned int precision);
 
-	void Draw(Shader& shader, const glm::vec3& position, glm::vec3 normal) override;
+	void Draw(Shader& shader, const glm::vec3& position, const glm::quat& orientation) override;
 };

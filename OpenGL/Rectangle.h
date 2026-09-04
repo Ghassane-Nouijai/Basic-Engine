@@ -26,5 +26,5 @@ public:
 
 	std::vector<float> CreateVertices(float sideA, float sideB);
 
-	void Draw(Shader& shader, const glm::vec3& position, glm::vec3 normal) override;
+	void Draw(Shader& shader, const glm::vec3& position, const glm::quat& orientation) override;
 };

@@ -39,6 +39,9 @@ std::vector<float> Sphere::CreateVertices(float radious, unsigned int precision)
 			vertices.push_back(radious * sin(phi) * cos(theta));  // x
 			vertices.push_back(radious * cos(phi));               // y
 			vertices.push_back(radious * sin(phi) * sin(theta));  // z
+			vertices.push_back(sin(phi) * cos(theta));  // normal x
+			vertices.push_back(cos(phi));               // normal y
+			vertices.push_back(sin(phi) * sin(theta));  // normal z
 		}
 	}
 	return vertices;
@@ -73,15 +76,16 @@ std::vector<unsigned int> Sphere::CreateIndices(unsigned int precision)
 	return indices;
 }
 
-void Sphere::Draw(Shader& shader, const glm::vec3& position, glm::vec3 normal)
+void Sphere::Draw(Shader& shader, const glm::vec3& position, const glm::quat& orientation)
 {
 	m_Mesh->Bind();
 
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
-	shader.SetUniformMat4("model", model);
+	glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
+	glm::mat4 rotation = glm::mat4_cast(orientation);
+	glm::mat4 model = translation * rotation;
 
+	shader.SetUniformMat4("model", model);
 	GLCall(glDrawElements(GL_TRIANGLES, m_Mesh->GetCount(), GL_UNSIGNED_INT, nullptr));
 
 	m_Mesh->Unbind();
 }
-

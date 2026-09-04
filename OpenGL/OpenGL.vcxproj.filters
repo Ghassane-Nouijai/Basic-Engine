@@ -95,6 +95,9 @@
     <None Include="PositionTest.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="Material.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -153,6 +156,9 @@
     </ClInclude>
     <ClInclude Include="Rectangle.h">
       <Filter>Header Files\Objecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials.h">
+      <Filter>Header Files\ObjectRendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@ Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& 
 	m_VBO.Bind(); // ensure VBO is bound before layout
 	VertexBufferLayout layout;
 	layout.Push<float>(floatsPerVertex);
+	layout.Push<float>(3);
 	m_VAO.AddBuffer(m_VBO, layout);
 	m_VAO.Unbind();
 }
