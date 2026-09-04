@@ -1,14 +1,21 @@
 #include "PhysicsObject.h"
 
-PhysicsObject::PhysicsObject(glm::vec3 position, float mass, float colliderRadius, float restitution = 0.8f, glm::vec3 normal = glm::vec3(0.0f, 1.0f, 0.0f), bool isStatic = false)
-	: m_Position(position), m_Velocity(0.0f), m_Acceleration(0.0f), m_Mass(mass), m_Restitution(restitution), m_Radius(colliderRadius), m_IsStatic(isStatic), m_InvMass(isStatic ? 0.0f : (mass > 0.0f ? 1.0f / mass : 0.0f)), m_Friction(0.0f), m_Normal(normal)
+PhysicsObject::PhysicsObject(glm::vec3 position, float mass, float radius,
+	float restitution, bool isStatic)
+	: m_Position(position), m_Velocity(0.0f), m_Acceleration(0.0f),
+	m_Mass(mass), m_Restitution(restitution), m_Radius(radius),
+	m_IsStatic(isStatic), m_InvMass(isStatic ? 0.0f : (mass > 0.0f ? 1.0f / mass : 0.0f)),
+	m_Friction(0.0f), m_Normal(0.0f, 1.0f, 0.0f), m_ColliderType(ColliderType::Sphere)
 {
-
 }
 
-PhysicsObject::~PhysicsObject()
+PhysicsObject::PhysicsObject(glm::vec3 position, float mass, glm::vec3 halfExtents,
+	float restitution, bool isStatic)
+	: m_Position(position), m_Velocity(0.0f), m_Acceleration(0.0f),
+	m_Mass(mass), m_Restitution(restitution), m_HalfExtents(halfExtents),
+	m_IsStatic(isStatic), m_InvMass(isStatic ? 0.0f : (mass > 0.0f ? 1.0f / mass : 0.0f)),
+	m_Friction(0.0f), m_Normal(0.0f, 1.0f, 0.0f), m_ColliderType(ColliderType::Box)
 {
-
 }
 
 void PhysicsObject::update(float deltaTime)

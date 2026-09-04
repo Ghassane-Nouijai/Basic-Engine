@@ -36,7 +36,7 @@ int main()
 	
 	// Set ups
 
-	Camera camera(glm::vec3(0.0f, 0.0f, 8.0f));
+	Camera camera(glm::vec3(0.0f, 5.0f, 25.0f));
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -81,12 +81,12 @@ int main()
 
 		auto obj2 = std::make_shared<SimObject>(
 			std::make_unique<Sphere>(0.5f, 50),
-			PhysicsObject(glm::vec3(0.0f, 6.0f, 0.0f), 1.5f, 0.5f, 1.0f, false)
+			PhysicsObject(glm::vec3(0.5f, 6.0f, 0.0f), 10.0f, 0.5f, 1.0f, false)
 		);
 
 		auto ground = std::make_shared<SimObject>(
 			std::make_unique<Rectangle>(20.0f, 20.0f),
-			PhysicsObject(glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 10.0f, 1.0f, true)
+			PhysicsObject(glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(10.0f, 0.2f, 10.0f), 1.0f, true)
 		);
 
 		scene.Add(obj1);  world.AddPhysicsObject(obj1);
@@ -101,6 +101,7 @@ int main()
 			float currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
+			deltaTime = std::min(deltaTime, 1.0f / 30.0f);
 
 			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 			shader.SetUniformMat4("projection", projection);

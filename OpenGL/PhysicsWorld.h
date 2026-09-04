@@ -24,5 +24,4 @@ private:
 
 	void ResolveCollisions();
 	void ResolvePair(PhysicsObject& a, PhysicsObject& b, const CollisionDetection& info);
-	void HandleGroundCollisions(float groundY);
 };

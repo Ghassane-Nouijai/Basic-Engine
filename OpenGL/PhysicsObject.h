@@ -6,28 +6,30 @@
 
 #include "Shader.h"
 
+enum class ColliderType { Sphere, Box };
+
 class PhysicsObject
 {
 public:
-	float m_Mass;
-	float m_InvMass;
-	float m_Friction;
-	float m_Restitution;
-	float m_Radius;
-	glm::vec3 m_Position;
-	glm::vec3 m_Velocity;
-	glm::vec3 m_Acceleration;
-	glm::vec3 m_AngularVelocity;
-	bool m_IsStatic;
+	PhysicsObject(glm::vec3 position, float mass, float radius,
+		float restitution = 0.8f, bool isStatic = false); // Sphere
+
+	PhysicsObject(glm::vec3 position, float mass, glm::vec3 halfExtents,
+		float restitution = 0.8f, bool isStatic = false); // Box
+
+	ColliderType m_ColliderType;
+	float        m_Radius = 0.0f;        // Sphere
+	glm::vec3    m_HalfExtents{ 0.0f };    // Box
+
+	glm::vec3 m_Position, m_Velocity, m_Acceleration;
+	float     m_Mass, m_InvMass, m_Restitution, m_Friction;
+	bool      m_IsStatic;
 	glm::vec3 m_Normal;
-public:
-	PhysicsObject(glm::vec3 position, float mass, float colliderRadius, float restitution, glm::vec3 normal, bool isStatic);
-	~PhysicsObject();
-	void update(float deltaTime);
+
+	void update(float dt);
 	void ApplyForce(const glm::vec3& force);
 	void Reset();
-	void setPosition(const glm::vec3& position);
-	void setNormal(const glm::vec3& normal);
+	void setPosition(const glm::vec3& p);
 	glm::vec3 getPosition() const;
-	glm::vec3 getNormal() const;
+	glm::vec3 getNormal() const { return m_Normal; }
 };

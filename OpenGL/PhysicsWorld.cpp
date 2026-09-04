@@ -5,13 +5,11 @@ PhysicsWorld::~PhysicsWorld() {}
 
 void PhysicsWorld::AddPhysicsObject(std::shared_ptr<SimObject> object)
 {
-	// ✅ Only store the shared_ptr — no raw pointer needed
 	m_SimObjects.push_back(object);
 }
 
 void PhysicsWorld::Update(float deltaTime)
 {
-	// 1. Apply gravity
 	for (auto& obj : m_SimObjects)
 	{
 		PhysicsObject& phys = obj->GetPhysicsObject();
@@ -19,7 +17,6 @@ void PhysicsWorld::Update(float deltaTime)
 			phys.ApplyForce(m_Gravity * phys.m_Mass);
 	}
 
-	// 2. Integrate positions
 	for (auto& obj : m_SimObjects)
 	{
 		PhysicsObject& phys = obj->GetPhysicsObject();
@@ -27,11 +24,8 @@ void PhysicsWorld::Update(float deltaTime)
 			phys.update(deltaTime);
 	}
 
-	// 3. Resolve collisions
 	ResolveCollisions();
-	HandleGroundCollisions(0.0f);
 
-	// 4. Reset accelerations
 	for (auto& obj : m_SimObjects)
 		obj->GetPhysicsObject().Reset();
 }
@@ -44,9 +38,22 @@ void PhysicsWorld::ResolveCollisions()
 			PhysicsObject& a = m_SimObjects[i]->GetPhysicsObject();
 			PhysicsObject& b = m_SimObjects[j]->GetPhysicsObject();
 
-			CollisionDetection info = SphereSphereCollision(
-				a.getPosition(), a.m_Radius,
-				b.getPosition(), b.m_Radius);
+			CollisionDetection info{ false, glm::vec3(0.0f), 0.0f };
+
+			if (a.m_ColliderType == ColliderType::Sphere && b.m_ColliderType == ColliderType::Sphere)
+			{
+				info = SphereSphereCollision(a.getPosition(), a.m_Radius, b.getPosition(), b.m_Radius);
+			}
+			else if (a.m_ColliderType == ColliderType::Sphere && b.m_ColliderType == ColliderType::Box)
+			{
+				info = SphereAABBCollision(a.getPosition(), a.m_Radius, b.getPosition(), b.m_HalfExtents);
+			}
+			else if (a.m_ColliderType == ColliderType::Box && b.m_ColliderType == ColliderType::Sphere)
+			{
+				info = SphereAABBCollision(b.getPosition(), b.m_Radius, a.getPosition(), a.m_HalfExtents);
+				info.m_Normal = -info.m_Normal; 
+			}
+			// Box-Box: skip for now unless you actually need two boxes colliding
 
 			if (info.m_CollisionDetected)
 				ResolvePair(a, b, info);
@@ -74,30 +81,4 @@ void PhysicsWorld::ResolvePair(PhysicsObject& a, PhysicsObject& b, const Collisi
 
 	if (!a.m_IsStatic) a.m_Velocity -= impulse * a.m_InvMass;
 	if (!b.m_IsStatic) b.m_Velocity += impulse * b.m_InvMass;
-}
-
-void PhysicsWorld::HandleGroundCollisions(float groundY)
-{
-	for (auto& obj : m_SimObjects)
-	{
-		PhysicsObject& phys = obj->GetPhysicsObject();
-		if (phys.m_IsStatic) continue;
-
-		CollisionDetection info = SpherePlaneCollision(
-			phys.getPosition(), phys.m_Radius,
-			glm::vec3(0.0f, 1.0f, 0.0f), groundY);
-
-		if (info.m_CollisionDetected)
-		{
-			phys.setPosition(phys.getPosition() + info.m_Normal * info.m_Depth);
-
-			float velAlongNormal = glm::dot(phys.m_Velocity, info.m_Normal);
-			if (velAlongNormal < 0.0f)
-			{
-				phys.m_Velocity -= (1.0f + phys.m_Restitution) * velAlongNormal * info.m_Normal;
-				phys.m_Velocity.x *= 0.98f;
-				phys.m_Velocity.z *= 0.98f;
-			}
-		}
-	}
 }
