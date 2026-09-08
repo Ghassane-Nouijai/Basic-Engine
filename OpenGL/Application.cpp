@@ -74,6 +74,8 @@ int main()
 
 		// Create objects
 		// Two balls falling and colliding
+		
+
 		auto obj1 = std::make_shared<SimObject>(
 			std::make_unique<Sphere>(0.2f, 50),
 			PhysicsObject(glm::vec3(0.0f, 5.0f, 0.0f), 1.0f, 0.2f, 0.8f, false, glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
@@ -92,9 +94,9 @@ int main()
 		);
 
 		auto ground = std::make_shared<SimObject>(
-			std::make_unique<Rectangle>(20.0f, 20.0f),
+			std::make_unique<Rectangle>(100.0f, 100.0f),
 			PhysicsObject(glm::vec3(0.0f, 0.0f, 0.0f), 0.0f,
-				glm::vec3(10.0f, 0.2f, 10.0f), 1.0f, true,
+				glm::vec3(50.0f, 0.2f, 50.0f), 1.0f, true,
 				groundOrientation),  
 			Material::Gold()
 		);
