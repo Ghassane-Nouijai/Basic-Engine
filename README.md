@@ -59,7 +59,7 @@ At startup, `Application.cpp` creates an OpenGL window, camera, renderer, scene,
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/<your-username>/<your-repository>.git
+   git clone https://github.com/<Ghassane-Nouijai>/<Basic-Engine>.git
    ```
 
 2. Open the repository's Visual Studio solution file (`.sln`).
@@ -89,11 +89,11 @@ The cursor is captured while the program runs so mouse movement controls the cam
 Fork the repository if you want your own remote copy, then clone it locally:
 
 ```bash
-git clone https://github.com/<your-username>/<your-repository>.git
+git clone https://github.com/<Ghassane-Nouijai>/<Basic-Engine>.git
 cd <your-repository>
 ```
 
-Open the `.sln` file in Visual Studio and build using the configuration expected by the project. If Visual Studio cannot locate third-party headers or libraries, check the project properties for **Include Directories**, **Library Directories**, and **Additional Dependencies**. Keep the dependency architecture consistent with your build target—for example, use `x64` libraries when building for `x64`.
+Open the `.sln` file in Visual Studio and build using the configuration expected by the project. If Visual Studio cannot locate third-party headers or libraries, check the project properties for **Include Directories**, **Library Directories**, and **Additional Dependencies**. Keep the dependency architecture consistent with your build target for example, use `x64` libraries when building for `x64`.
 
 ### Project structure
 
