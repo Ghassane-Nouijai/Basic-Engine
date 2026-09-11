@@ -160,6 +160,9 @@
     <ClInclude Include="Materials.h">
       <Filter>Header Files\ObjectRendering</Filter>
     </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

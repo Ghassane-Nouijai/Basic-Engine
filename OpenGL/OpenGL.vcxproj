@@ -171,6 +171,7 @@
     <None Include="PositionTest.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="InputProcesses.h" />
