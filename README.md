@@ -132,6 +132,3 @@ The example setup in `Application.cpp` is the best reference for this pattern.
 
 This template will continue moving toward **more abstractions**: clearer resource and asset management, higher-level scene and entity workflows, reusable materials, more flexible mesh/model loading, and a more capable physics and collision layer. The aim is to keep the foundation approachable while making new projects faster to prototype and easier to maintain.
 
-## License
-
-Add a license file to define how others may use, modify, and distribute this project.
